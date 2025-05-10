@@ -150,6 +150,8 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
     | Image name | postgis/postgis |
     | Image version | 16 |
 
+    If you are on an ARM machine, you may need to use ["imresamu/postgis"](https://hub.docker.com/r/imresamu/postgis) as the image instead.
+
 2. Open the GitHub Copilot Chat panel, and select the "Agent" mode.
 
 3. In the Agent mode, you can ask questions about your database and get answers in natural language.
