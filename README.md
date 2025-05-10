@@ -154,9 +154,25 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
 
 3. In the Agent mode, you can ask questions about your database and get answers in natural language.
 
-    Create a new database in "local-postgis-arm" server called "observations" and enable postgis for it
+    ```text
+    Create a new database in "local-postgis" server called "observations" and enable postgis for it
+    ```
 
-    Use the data/observations/swallowtails.tsv from my workspace to create a new table called "swallowtails" in the "local-postgis-arm" server and load the data in.
+    ````text
+    Use the data/observations/pennsylvania-insects.csv from my workspace to create a new table called "pennsylvania" in the "local-postgis" server and load the data in.
+    ```
+
+    ```text
+    Visualize the schema
+    ```
+
+    ```text
+    Convert the latitude longitude into a new geometry column
+    ```
+
+    ```text
+    what are the top observed species in philadelphia PA?
+    ```
 
 ## Licensing
 
