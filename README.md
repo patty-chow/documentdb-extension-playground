@@ -3,13 +3,14 @@
 Learn how to use the new PostgreSQL extension for Visual Studio Code! This repository contains sample databases and instructions for setting up a local PostgreSQL server using Docker, connecting to an Azure PostgreSQL Flexible Server, and using all the features of the new PostgreSQL extension.
 
 * [Prerequisites](#prerequisites)
-* [Explore a local database](#explore-a-local-database)
+* [Explore a database schema, tables, and queries](#explore-a-database-schema-tables-and-queries)
 * [Use "Chat with this database" feature](#use-chat-with-this-database-feature)
 * [GitHub Copilot Agent Mode](#github-copilot-agent-mode)
 * [Connect to an Azure PostgreSQL Flexible Server](#connect-to-an-azure-postgresql-flexible-server)
 
 ## Prerequisites
 
+* [PostgresSQL](https://www.postgresql.org/download/)
 * [PostgreSQL extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 * [GitHub Copilot Chat](https://marketplace.visualstudio.com/items/?itemName=GitHub.copilot-chat)
@@ -32,7 +33,7 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
 
     | Option | Value  |
     |--------|--------|
-    | Port   | 54876  |
+    | Bound Port   | 54876  |
 
 2. Run new query on existing DB (right-click "New Query" on database name):
 
@@ -40,7 +41,7 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
     CREATE DATABASE adventureworks;
     ```
 
-3. Restore the data from the schema and data files:
+3. In the terminal, run these commands to restore the data from the schema and data files:
 
     ```bash
     psql -d "postgres://postgres:postgres@localhost:54876/adventureworks" -f data/adventureworks/adventureworks-schema.sql
@@ -73,7 +74,7 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
 ## Use "Chat with this database" feature
 
 1. Reuse the PostgreSQL server you created in the previous section.
- 
+
 2. In the PostgreSQL extension, select the "local-postgres" server you created in the previous section.  Right-click on any database in the server and select "New Query". In the query editor, run the following command to create a new database:
 
     ```sql
@@ -100,12 +101,11 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
 
 7. In the PostgreSQL extension, open the "Query History" tab, select the query you just ran, and open the query by selecting "Open Query" in the right-click menu.
 
-
 ## Connect to an Azure PostgreSQL Flexible Server
 
 1. Create an Azure PostgreSQL Flexible Server using the Azure Portal, CLI, or Bicep. Currently, you can only use Entra-based authentication if your account is associated with a single tenant. If you are creating a server in a different tenant, you will need to use password-based authentication for now.
 
-2. In the PostgreSQL extension, select "🔌" ("Add New Connection"). 
+2. In the PostgreSQL extension, select "🔌" ("Add New Connection").
 
 3. Select "Browse Azure". Filter the Subscription, Resource Group, and Location to find your server.
 
@@ -127,7 +127,6 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
 
     @pgsql Is the DiskANN extension enabled on this server? If not, add it.
 
-
 ## GitHub Copilot Agent Mode
 
 1. In the PostgreSQL extension, select "Create New Server" and select the local Docker option. Fill in these options:
@@ -146,11 +145,16 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
 
     | Option | Value |
     |--------|--------|
-    | Port   | 56453  |
+    | Bound Port   | 56453  |
     | Image name | postgis/postgis |
     | Image version | 16 |
 
     If you are on an ARM machine, you may need to use ["imresamu/postgis"](https://hub.docker.com/r/imresamu/postgis) as the image instead.
+
+    | Option | Value |
+    |--------|--------|
+    | Image name | imresamu/postgis |
+    | Image version | 16-3.4-bundle0-bookworm |
 
 2. Open the GitHub Copilot Chat panel, and select the "Agent" mode.
 
@@ -160,7 +164,7 @@ Learn how to use the new PostgreSQL extension for Visual Studio Code! This repos
     Create a new database in "local-postgis" server called "observations" and enable postgis for it
     ```
 
-    ````text
+    ```text
     Use the data/observations/pennsylvania-insects.csv from my workspace to create a new table called "pennsylvania" in the "local-postgis" server and load the data in.
     ```
 
