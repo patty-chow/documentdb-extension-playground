@@ -1,189 +1,331 @@
-# PostgreSQL Extension Playground
+# DocumentDB Extension Playground
 
-Learn how to use the new PostgreSQL extension for Visual Studio Code! This repository contains sample databases and instructions for setting up a local PostgreSQL server using Docker, connecting to an Azure PostgreSQL Flexible Server, and using all the features of the new PostgreSQL extension.
+Learn how to use the DocumentDB for VS Code extension! This repository contains sample healthcare data and step-by-step instructions for setting up a local DocumentDB instance using Docker, connecting to it via the VS Code extension, and exploring all the features of the DocumentDB for VS Code extension.
 
 * [Prerequisites](#prerequisites)
-* [Explore a database schema, tables, and queries](#explore-a-database-schema-tables-and-queries)
-* [Use "Chat with this database" feature](#use-chat-with-this-database-feature)
-* [GitHub Copilot Agent Mode](#github-copilot-agent-mode)
-* [Connect to an Azure PostgreSQL Flexible Server](#connect-to-an-azure-postgresql-flexible-server)
+* [Explore a healthcare database with DocumentDB](#explore-a-healthcare-database-with-documentdb)
+* [Use multiple data views](#use-multiple-data-views)
+* [Perform CRUD operations](#perform-crud-operations)
+* [Create indexes and run aggregation queries](#create-indexes-and-run-aggregation-queries)
+* [Import and export data](#import-and-export-data)
 
 ## Prerequisites
 
-* [PostgresSQL](https://www.postgresql.org/download/)
-* [PostgreSQL extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql)
+* [DocumentDB for VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-documentdb)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
-* [GitHub Copilot Chat](https://marketplace.visualstudio.com/items/?itemName=GitHub.copilot-chat)
+* [Visual Studio Code](https://code.visualstudio.com/)
 
-## Explore a database schema, tables, and queries
+## Explore a healthcare database with DocumentDB
 
-1. In the PostgreSQL extension, select "Create New Server" and select the local Docker option. Fill in these options:
+1. **Start a local DocumentDB instance using Docker:**
 
-    | Option | Value |
-    |--------|-------|
-    | Connection Name | local-postgres |
-    | Container Name | local-postgres |
-    | Username | postgres |
-    | Password | postgres |
-    | Save password | checked |
-    | Database name | postgres |
-    | Server group | Servers (default) |
+   ```bash
+   docker pull ghcr.io/microsoft/documentdb/documentdb-local:latest
+   docker tag ghcr.io/microsoft/documentdb/documentdb-local:latest documentdb
+   docker run -dt -p 10260:10260 --name documentdb-container documentdb --username admin --password password123
+   docker image rm -f ghcr.io/microsoft/documentdb/documentdb-local:latest || echo "No existing documentdb image to remove"
+   ```
 
-    Open the "Advanced" section and fill in these options:
+   > **Note:** We're using port `10260` to avoid conflicts with other local database services. You can use port `27017` (the standard MongoDB port) if you prefer.
 
-    | Option | Value  |
-    |--------|--------|
-    | Bound Port   | 54876  |
+2. **Connect to DocumentDB using the VS Code extension:**
+   - Open VS Code and click the DocumentDB icon in the sidebar
+   - Click "Add New Connection"
+   - Select "Connection String" and paste:
+     ```
+     mongodb://admin:password123@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true&authMechanism=SCRAM-SHA-256
+     ```
+   - Click "Test Connection" to verify connectivity
+   - Click "Save Connection"
 
-2. Run new query on existing DB (right-click "New Query" on database name):
+3. **Create a healthcare database:**
+   - In the DocumentDB extension, right-click on your connection and select "Create Database..."
+   - Enter `healthcare` as the database name and confirm
 
-    ```sql
-    CREATE DATABASE adventureworks;
-    ```
+4. **Create collections for healthcare data:**
+   - Right-click on the `healthcare` database and select "Create Collection..."
+   - Create these collections:
+     - `patients` - Patient information
+     - `appointments` - Medical appointments
+     - `medical_records` - Detailed health records
+     - `billing` - Financial transactions
 
-3. In the terminal, run these commands to restore the data from the schema and data files:
+5. **Import sample healthcare data:**
+   - Right-click on the `patients` collection and select "Import"
+   - Choose `data/healthcare/patients.json` from this repository
+   - Repeat for other collections using their respective JSON files
 
-    ```bash
-    psql -d "postgres://postgres:postgres@localhost:54876/adventureworks" -f data/adventureworks/adventureworks-schema.sql
-    ```
+6. **Explore the database structure:**
+   - Click on the `healthcare` database to expand it
+   - Click on the `patients` collection to view documents
+   - Notice the different data views available (Table, Tree, JSON)
 
-    ```bash
-    psql -d "postgres://postgres:postgres@localhost:54876/adventureworks" -f data/adventureworks/adventureworks-data.sql
-    ```
+## Use multiple data views
 
-4. In the PostgreSQL extension, right-click on the server and select "Refresh". You should see "adventureworks" show up.
+The DocumentDB extension provides three different ways to view your data:
 
-5. In the PostgreSQL extension, right-click on the adventureworks database and select "Connect with PSQL". In the psql terminal, try commands like `\dn` to see the schemas in the database, or `\dt sales.*` to list the tables in the `sales` schema.
+1. **Table View** (default):
+   - View documents in a spreadsheet-like format
+   - Sort by clicking column headers
+   - Use the filter bar to search for specific values
+   - Navigate through pages of data
 
-6. In the PostgreSQL extension, right-click on the adventureworks database and select "Visualize Schema". A window will open with a diagram of the database schema. You can zoom in and out, and click on tables to see their columns and relationships.
+2. **Tree View**:
+   - See document structure as an expandable tree
+   - Click on nodes to expand/collapse nested objects
+   - Easily navigate complex document structures
+   - Right-click on the collection and select "Tree View"
 
-7. In the PostgreSQL extension, right-click on the adventureworks database and select "New Query".
+3. **JSON View**:
+   - View documents in their native JSON format
+   - See syntax-highlighted, formatted JSON
+   - Right-click on the collection and select "JSON View"
 
-8. In the Query editor window, write a new query like:
+Try switching between these views to see how the same data is presented differently!
 
-    ```sql
-    SELECT firstname, lastname, city FROM sales.vindividualcustomer
-    ```
+## Perform CRUD operations
 
-    The extension should offer to autocomplete the tables from the `sales` schema.
+### Create documents
 
-9. When the query is complete, see the results in the "PostgreSQL Query Results" tab below.
+1. **Using the Table View:**
+   - Right-click on the `patients` collection and select "Create Document"
+   - Fill in the fields in the table format
+   - Click "Save" to create the document
 
-10. Select the "Export to CSV" option in the results tab to save the results to a CSV file. You'll also see options to export to XLSX and JSON.
+2. **Using the JSON View:**
+   - Right-click on the `patients` collection and select "Create Document"
+   - Enter JSON directly:
+     ```json
+     {
+       "patientId": "P10001",
+       "firstName": "John",
+       "lastName": "Smith",
+       "dateOfBirth": "1985-03-15",
+       "email": "john.smith@email.com",
+       "phone": "+1-555-0123",
+       "address": {
+         "street": "123 Main St",
+         "city": "Springfield",
+         "state": "IL",
+         "zipCode": "62701"
+       },
+       "insurance": {
+         "provider": "Blue Cross",
+         "policyNumber": "BC123456789"
+       },
+       "createdAt": new Date()
+     }
+     ```
 
-## Use "Chat with this database" feature
+### Read documents
 
-1. Reuse the PostgreSQL server you created in the previous section.
+1. **Basic queries:**
+   - Right-click on the `patients` collection and select "New Query"
+   - Try these queries:
+     ```javascript
+     // Find all patients
+     db.patients.find({})
+     
+     // Find patients by last name
+     db.patients.find({ lastName: "Smith" })
+     
+     // Find patients with specific insurance
+     db.patients.find({ "insurance.provider": "Blue Cross" })
+     ```
 
-2. In the PostgreSQL extension, select the "local-postgres" server you created in the previous section.  Right-click on any database in the server and select "New Query". In the query editor, run the following command to create a new database:
+2. **Query with projections:**
+   ```javascript
+   // Get only patient names and emails
+   db.patients.find({}, { firstName: 1, lastName: 1, email: 1, _id: 0 })
+   ```
 
-    ```sql
-    CREATE DATABASE pagila;
-    ```
+### Update documents
 
-3. Restore the data from the schema and data files:
+1. **Update a single document:**
+   ```javascript
+   // Update a patient's phone number
+   db.patients.updateOne(
+     { patientId: "P10001" },
+     { $set: { phone: "+1-555-9999" } }
+   )
+   ```
 
-    ```bash
-    psql -d "postgres://postgres:postgres@localhost:54876/pagila" -f data/pagila/pagila-schema.sql
-    ```
+2. **Update multiple documents:**
+   ```javascript
+   // Update all patients with a specific insurance provider
+   db.patients.updateMany(
+     { "insurance.provider": "Blue Cross" },
+     { $set: { "insurance.provider": "Blue Cross Blue Shield" } }
+   )
+   ```
 
-    ```bash
-    psql -d "postgres://postgres:postgres@localhost:54876/pagila" -f data/pagila/pagila-data.sql
-    ```
+### Delete documents
 
-4. In the PostgreSQL extension, right-click on the server and select "Refresh". You should see "pagila" show up.
+1. **Delete a single document:**
+   ```javascript
+   // Delete a specific patient
+   db.patients.deleteOne({ patientId: "P10001" })
+   ```
 
-5. In the PostgreSQL extension, right-click on the pagila database and select "Chat with this database".
+2. **Delete multiple documents:**
+   ```javascript
+   // Delete all patients with a specific last name
+   db.patients.deleteMany({ lastName: "Smith" })
+   ```
 
-6. In the GitHub Copilot chat window, ask this question:
+## Create indexes and run aggregation queries
 
-    @pgql For each film, find the film that generated the highest total revenue during the first half of 2022. For each, report the total number of rentals, total rental revenue, and percentage of total revenue for each category. Order by highest revenue. Format as a table.
+### Creating indexes
 
-7. In the PostgreSQL extension, open the "Query History" tab, select the query you just ran, and open the query by selecting "Open Query" in the right-click menu.
+1. **Single field index:**
+   ```javascript
+   // Create an index on patientId for faster lookups
+   db.patients.createIndex({ "patientId": 1 })
+   ```
 
-## Connect to an Azure PostgreSQL Flexible Server
+2. **Compound index:**
+   ```javascript
+   // Create an index on lastName and firstName
+   db.patients.createIndex({ "lastName": 1, "firstName": 1 })
+   ```
 
-1. Create an Azure PostgreSQL Flexible Server using the Azure Portal, CLI, or Bicep. Currently, you can only use Entra-based authentication if your account is associated with a single tenant. If you are creating a server in a different tenant, you will need to use password-based authentication for now.
+3. **Text index for search:**
+   ```javascript
+   // Create a text index for searching patient names
+   db.patients.createIndex({ "firstName": "text", "lastName": "text" })
+   ```
 
-2. In the PostgreSQL extension, select "🔌" ("Add New Connection").
+### Aggregation queries
 
-3. Select "Browse Azure". Filter the Subscription, Resource Group, and Location to find your server.
+1. **Basic aggregation - count patients by insurance provider:**
+   ```javascript
+   db.patients.aggregate([
+     { $group: { _id: "$insurance.provider", count: { $sum: 1 } } },
+     { $sort: { count: -1 } }
+   ])
+   ```
 
-4. Configure either the Entra authentication option or password authentication option.
+2. **Complex aggregation - patient demographics:**
+   ```javascript
+   db.patients.aggregate([
+     {
+       $addFields: {
+         age: {
+           $floor: {
+             $divide: [
+               { $subtract: [new Date(), { $dateFromString: { dateString: "$dateOfBirth" } }] },
+               365 * 24 * 60 * 60 * 1000
+             ]
+           }
+         }
+       }
+     },
+     {
+       $group: {
+         _id: {
+           ageGroup: {
+             $cond: {
+               if: { $lt: ["$age", 30] },
+               then: "18-29",
+               else: {
+                 $cond: {
+                   if: { $lt: ["$age", 50] },
+                   then: "30-49",
+                   else: "50+"
+                 }
+               }
+             }
+           }
+         },
+         count: { $sum: 1 },
+         avgAge: { $avg: "$age" }
+       }
+     },
+     { $sort: { "_id.ageGroup": 1 } }
+   ])
+   ```
 
-5. Select "Test Connection" to verify that the connection is successful. If no errors pop up, select "Save Connection".
+3. **Join-like aggregation with appointments:**
+   ```javascript
+   db.appointments.aggregate([
+     {
+       $lookup: {
+         from: "patients",
+         localField: "patientId",
+         foreignField: "patientId",
+         as: "patient"
+       }
+     },
+     { $unwind: "$patient" },
+     {
+       $group: {
+         _id: "$patient.lastName",
+         appointmentCount: { $sum: 1 },
+         totalDuration: { $sum: "$duration" }
+       }
+     },
+     { $sort: { appointmentCount: -1 } }
+   ])
+   ```
 
-6. In the PostgreSQL extension, you should now see your server listed.
+## Import and export data
 
-7. In the PostgreSQL extension, right-click on a database in the server and select "Chat with this database".
+### Import data
 
-8. In the GitHub Copilot chat window, ask these questions:
+1. **Import JSON files:**
+   - Right-click on any collection and select "Import"
+   - Choose a JSON file from your computer
+   - The extension will automatically parse and import the documents
 
-    @pgsql what storage and compute resources does my DB have?
+2. **Import from clipboard:**
+   - Copy JSON data to your clipboard
+   - Right-click on a collection and select "Import"
+   - Paste the JSON data directly
 
-    @pgql When did the last backup occur?
+### Export data
 
-    @pgsql what extensions are in the allowlist for my server?
+1. **Export collection:**
+   - Right-click on a collection and select "Export"
+   - Choose your preferred format (JSON, CSV)
+   - Select a location to save the file
 
-    @pgsql Is the DiskANN extension enabled on this server? If not, add it.
+2. **Export query results:**
+   - Run a query in the query editor
+   - Click the "Export" button in the results panel
+   - Choose format and save location
 
-## GitHub Copilot Agent Mode
+## Next steps
 
-1. In the PostgreSQL extension, select "Create New Server" and select the local Docker option. Fill in these options:
+- **Explore advanced features:** Try full-text search, geospatial queries, and vector similarity search
+- **Connect to cloud instances:** Set up connections to Azure Cosmos DB or MongoDB Atlas
+- **Use service discovery:** Browse and connect to DocumentDB instances in your cloud environment
+- **Join the community:** Visit our [GitHub repository](https://github.com/microsoft/vscode-documentdb) and [Discord channel](https://discord.gg/vH7bYu524D)
 
-    | Option | Value |
-    |--------|-------|
-    | Connection Name | local-postgis |
-    | Container Name | local-postgis |
-    | Username | postgres |
-    | Password | postgres |
-    | Save password | checked |
-    | Database name | postgres |
-    | Server group | Servers (default) |
+## Troubleshooting
 
-    Open the "Advanced" section and fill in these options:
+### Common issues
 
-    | Option | Value |
-    |--------|--------|
-    | Bound Port   | 56453  |
-    | Image name | postgis/postgis |
-    | Image version | 16 |
+1. **Connection fails:**
+   - Ensure Docker is running and the DocumentDB container is started
+   - Check that the port (10260) is not blocked by firewall
+   - Verify the connection string format
 
-    If you are on an ARM machine, you may need to use ["imresamu/postgis"](https://hub.docker.com/r/imresamu/postgis) as the image instead.
+2. **Import fails:**
+   - Ensure your JSON file is properly formatted
+   - Check that the file size is within limits
+   - Verify you have write permissions to the collection
 
-    | Option | Value |
-    |--------|--------|
-    | Image name | imresamu/postgis |
-    | Image version | 16-3.4-bundle0-bookworm |
+3. **Queries are slow:**
+   - Create appropriate indexes for your query patterns
+   - Use projections to limit returned fields
+   - Consider using aggregation pipelines for complex operations
 
-2. Open the GitHub Copilot Chat panel, and select the "Agent" mode.
+### Getting help
 
-3. In the Agent mode, you can ask questions about your database and get answers in natural language.
-
-    ```text
-    Create a new database in "local-postgis" server called "observations" and enable postgis for it
-    ```
-
-    ```text
-    Use the data/observations/pennsylvania-insects.csv from my workspace to create a new table called "pennsylvania" in the "local-postgis" server and load the data in.
-    ```
-
-    ```text
-    Visualize the schema
-    ```
-
-    ```text
-    Convert the latitude longitude into a new geometry column
-    ```
-
-    ```text
-    what are the top observed species in philadelphia PA?
-    ```
+- **Extension documentation:** Check the built-in help in the extension
+- **Community support:** Join our [Discord community](https://discord.gg/vH7bYu524D)
+- **GitHub issues:** Report bugs on the [extension repository](https://github.com/microsoft/vscode-documentdb)
 
 ## Licensing
 
-This repository is provided under the MIT License. However, please note that each individual database included in this repository is subject to its own license terms.
-
-The MIT License applies to the scripts and other components that we created. We respect the rights of the original creators of the databases, and we only redistribute these databases in compliance with their respective licenses.
-
-For each individual database, we have clearly indicated where the full text of the license can be found. If you choose to use any of these databases, you must comply with the terms specified in their respective licenses.
+This repository is provided under the MIT License. The sample healthcare data is fictional and created for educational purposes only.

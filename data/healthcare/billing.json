@@ -1,0 +1,193 @@
+[
+  {
+    "billingId": "BILL001",
+    "patientId": "P10001",
+    "appointmentId": "APT001",
+    "serviceDate": "2024-02-15T10:00:00Z",
+    "serviceType": "Cardiology Consultation",
+    "provider": "Dr. Sarah Wilson",
+    "charges": {
+      "consultation": 150.00,
+      "labWork": 85.00,
+      "medication": 25.00,
+      "total": 260.00
+    },
+    "insurance": {
+      "provider": "Blue Cross",
+      "policyNumber": "BC123456789",
+      "coveredAmount": 208.00,
+      "patientResponsibility": 52.00
+    },
+    "status": "Paid",
+    "paymentDate": "2024-02-20T14:30:00Z",
+    "paymentMethod": "Credit Card",
+    "createdAt": "2024-02-15T10:30:00Z"
+  },
+  {
+    "billingId": "BILL002",
+    "patientId": "P10002",
+    "appointmentId": "APT002",
+    "serviceDate": "2024-02-16T14:30:00Z",
+    "serviceType": "Psychiatry Consultation",
+    "provider": "Dr. James Chen",
+    "charges": {
+      "consultation": 200.00,
+      "labWork": 45.00,
+      "medication": 35.00,
+      "total": 280.00
+    },
+    "insurance": {
+      "provider": "Aetna",
+      "policyNumber": "AE987654321",
+      "coveredAmount": 224.00,
+      "patientResponsibility": 56.00
+    },
+    "status": "Pending",
+    "paymentDate": null,
+    "paymentMethod": null,
+    "createdAt": "2024-02-16T15:00:00Z"
+  },
+  {
+    "billingId": "BILL003",
+    "patientId": "P10003",
+    "appointmentId": "APT003",
+    "serviceDate": "2024-02-14T08:00:00Z",
+    "serviceType": "Annual Physical",
+    "provider": "Dr. Maria Rodriguez",
+    "charges": {
+      "consultation": 120.00,
+      "labWork": 150.00,
+      "total": 270.00
+    },
+    "insurance": {
+      "provider": "Cigna",
+      "policyNumber": "CI456789123",
+      "coveredAmount": 270.00,
+      "patientResponsibility": 0.00
+    },
+    "status": "Paid",
+    "paymentDate": "2024-02-18T09:15:00Z",
+    "paymentMethod": "Insurance",
+    "createdAt": "2024-02-14T08:30:00Z"
+  },
+  {
+    "billingId": "BILL004",
+    "patientId": "P10004",
+    "appointmentId": "APT004",
+    "serviceDate": "2024-02-17T11:00:00Z",
+    "serviceType": "Pulmonology Follow-up",
+    "provider": "Dr. Robert Thompson",
+    "charges": {
+      "consultation": 180.00,
+      "labWork": 95.00,
+      "medication": 45.00,
+      "total": 320.00
+    },
+    "insurance": {
+      "provider": "Blue Cross",
+      "policyNumber": "BC987123456",
+      "coveredAmount": 256.00,
+      "patientResponsibility": 64.00
+    },
+    "status": "Paid",
+    "paymentDate": "2024-02-22T11:45:00Z",
+    "paymentMethod": "Check",
+    "createdAt": "2024-02-17T11:30:00Z"
+  },
+  {
+    "billingId": "BILL005",
+    "patientId": "P10005",
+    "appointmentId": "APT005",
+    "serviceDate": "2024-02-18T09:30:00Z",
+    "serviceType": "Endoscopy Procedure",
+    "provider": "Dr. Lisa Park",
+    "charges": {
+      "consultation": 150.00,
+      "procedure": 800.00,
+      "anesthesia": 300.00,
+      "facility": 200.00,
+      "medication": 50.00,
+      "total": 1500.00
+    },
+    "insurance": {
+      "provider": "UnitedHealth",
+      "policyNumber": "UH321654987",
+      "coveredAmount": 1200.00,
+      "patientResponsibility": 300.00
+    },
+    "status": "Pending",
+    "paymentDate": null,
+    "paymentMethod": null,
+    "createdAt": "2024-02-18T10:00:00Z"
+  },
+  {
+    "billingId": "BILL006",
+    "patientId": "P10001",
+    "appointmentId": "APT006",
+    "serviceDate": "2024-02-20T15:00:00Z",
+    "serviceType": "Dermatology Consultation",
+    "provider": "Dr. David Miller",
+    "charges": {
+      "consultation": 140.00,
+      "labWork": 75.00,
+      "medication": 30.00,
+      "total": 245.00
+    },
+    "insurance": {
+      "provider": "Blue Cross",
+      "policyNumber": "BC123456789",
+      "coveredAmount": 196.00,
+      "patientResponsibility": 49.00
+    },
+    "status": "Paid",
+    "paymentDate": "2024-02-25T16:20:00Z",
+    "paymentMethod": "Credit Card",
+    "createdAt": "2024-02-20T15:30:00Z"
+  },
+  {
+    "billingId": "BILL007",
+    "patientId": "P10002",
+    "appointmentId": "APT007",
+    "serviceDate": "2024-02-23T13:00:00Z",
+    "serviceType": "Psychiatry Follow-up",
+    "provider": "Dr. James Chen",
+    "charges": {
+      "consultation": 180.00,
+      "medication": 40.00,
+      "total": 220.00
+    },
+    "insurance": {
+      "provider": "Aetna",
+      "policyNumber": "AE987654321",
+      "coveredAmount": 176.00,
+      "patientResponsibility": 44.00
+    },
+    "status": "Pending",
+    "paymentDate": null,
+    "paymentMethod": null,
+    "createdAt": "2024-02-23T13:30:00Z"
+  },
+  {
+    "billingId": "BILL008",
+    "patientId": "P10003",
+    "appointmentId": "APT008",
+    "serviceDate": "2024-02-25T10:30:00Z",
+    "serviceType": "Orthopedic Consultation",
+    "provider": "Dr. Amanda Foster",
+    "charges": {
+      "consultation": 160.00,
+      "xray": 120.00,
+      "total": 280.00
+    },
+    "insurance": {
+      "provider": "Cigna",
+      "policyNumber": "CI456789123",
+      "coveredAmount": 224.00,
+      "patientResponsibility": 56.00
+    },
+    "status": "Pending",
+    "paymentDate": null,
+    "paymentMethod": null,
+    "createdAt": "2024-02-25T11:00:00Z"
+  }
+]

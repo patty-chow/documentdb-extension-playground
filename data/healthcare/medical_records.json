@@ -1,0 +1,243 @@
+[
+  {
+    "recordId": "MR001",
+    "patientId": "P10001",
+    "visitDate": "2024-01-15T10:30:00Z",
+    "doctorId": "DOC001",
+    "doctorName": "Dr. Sarah Wilson",
+    "visitType": "Initial Consultation",
+    "chiefComplaint": "High blood pressure and chest pain",
+    "vitalSigns": {
+      "bloodPressure": "140/90",
+      "heartRate": 85,
+      "temperature": 98.6,
+      "weight": 180,
+      "height": 72
+    },
+    "diagnosis": "Hypertension, possible angina",
+    "treatment": {
+      "medications": [
+        {
+          "name": "Lisinopril",
+          "dosage": "10mg",
+          "frequency": "Once daily",
+          "instructions": "Take in the morning"
+        }
+      ],
+      "lifestyle": [
+        "Reduce salt intake",
+        "Exercise 30 minutes daily",
+        "Monitor blood pressure at home"
+      ]
+    },
+    "labResults": {
+      "cholesterol": {
+        "total": 220,
+        "hdl": 45,
+        "ldl": 140,
+        "triglycerides": 180
+      },
+      "glucose": 95
+    },
+    "followUp": {
+      "date": "2024-02-15T10:00:00Z",
+      "type": "Follow-up",
+      "notes": "Review blood pressure control and medication effectiveness"
+    },
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "recordId": "MR002",
+    "patientId": "P10002",
+    "visitDate": "2024-01-16T14:20:00Z",
+    "doctorId": "DOC002",
+    "doctorName": "Dr. James Chen",
+    "visitType": "Initial Consultation",
+    "chiefComplaint": "Anxiety and difficulty sleeping",
+    "vitalSigns": {
+      "bloodPressure": "120/80",
+      "heartRate": 95,
+      "temperature": 98.4,
+      "weight": 135,
+      "height": 65
+    },
+    "diagnosis": "Generalized Anxiety Disorder",
+    "treatment": {
+      "medications": [
+        {
+          "name": "Zoloft",
+          "dosage": "50mg",
+          "frequency": "Once daily",
+          "instructions": "Take in the morning with food"
+        }
+      ],
+      "therapy": [
+        "Cognitive Behavioral Therapy recommended",
+        "Stress management techniques",
+        "Regular exercise"
+      ]
+    },
+    "labResults": {
+      "vitaminD": 25
+    },
+    "followUp": {
+      "date": "2024-02-16T14:30:00Z",
+      "type": "Follow-up",
+      "notes": "Evaluate medication effectiveness and adjust dosage if needed"
+    },
+    "createdAt": "2024-01-16T14:20:00Z"
+  },
+  {
+    "recordId": "MR003",
+    "patientId": "P10003",
+    "visitDate": "2024-01-17T09:15:00Z",
+    "doctorId": "DOC003",
+    "doctorName": "Dr. Maria Rodriguez",
+    "visitType": "Annual Physical",
+    "chiefComplaint": "Annual checkup",
+    "vitalSigns": {
+      "bloodPressure": "135/85",
+      "heartRate": 78,
+      "temperature": 98.2,
+      "weight": 195,
+      "height": 70
+    },
+    "diagnosis": "Hyperlipidemia, pre-hypertension",
+    "treatment": {
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20mg",
+          "frequency": "Once daily",
+          "instructions": "Take in the evening"
+        },
+        {
+          "name": "Aspirin",
+          "dosage": "81mg",
+          "frequency": "Once daily",
+          "instructions": "Take in the morning"
+        }
+      ],
+      "lifestyle": [
+        "Low-fat diet",
+        "Regular exercise",
+        "Weight management"
+      ]
+    },
+    "labResults": {
+      "cholesterol": {
+        "total": 250,
+        "hdl": 40,
+        "ldl": 160,
+        "triglycerides": 200
+      },
+      "glucose": 105,
+      "creatinine": 1.2
+    },
+    "followUp": {
+      "date": "2024-02-14T08:00:00Z",
+      "type": "Follow-up",
+      "notes": "Review lipid panel and blood pressure"
+    },
+    "createdAt": "2024-01-17T09:15:00Z"
+  },
+  {
+    "recordId": "MR004",
+    "patientId": "P10004",
+    "visitDate": "2024-01-18T11:45:00Z",
+    "doctorId": "DOC004",
+    "doctorName": "Dr. Robert Thompson",
+    "visitType": "Initial Consultation",
+    "chiefComplaint": "Shortness of breath and wheezing",
+    "vitalSigns": {
+      "bloodPressure": "118/75",
+      "heartRate": 88,
+      "temperature": 98.8,
+      "weight": 125,
+      "height": 64
+    },
+    "diagnosis": "Asthma",
+    "treatment": {
+      "medications": [
+        {
+          "name": "Albuterol",
+          "dosage": "2 puffs",
+          "frequency": "As needed",
+          "instructions": "Use inhaler when experiencing symptoms"
+        },
+        {
+          "name": "Fluticasone",
+          "dosage": "110mcg",
+          "frequency": "Twice daily",
+          "instructions": "Use inhaler morning and evening"
+        }
+      ],
+      "lifestyle": [
+        "Avoid triggers (dust, pollen, pets)",
+        "Use air purifier at home",
+        "Keep rescue inhaler with you"
+      ]
+    },
+    "labResults": {
+      "peakFlow": 350,
+      "spirometry": {
+        "fev1": 75,
+        "fvc": 85
+      }
+    },
+    "followUp": {
+      "date": "2024-02-17T11:00:00Z",
+      "type": "Follow-up",
+      "notes": "Review asthma control and adjust medication if needed"
+    },
+    "createdAt": "2024-01-18T11:45:00Z"
+  },
+  {
+    "recordId": "MR005",
+    "patientId": "P10005",
+    "visitDate": "2024-01-19T16:30:00Z",
+    "doctorId": "DOC005",
+    "doctorName": "Dr. Lisa Park",
+    "visitType": "Initial Consultation",
+    "chiefComplaint": "Abdominal pain and acid reflux",
+    "vitalSigns": {
+      "bloodPressure": "125/82",
+      "heartRate": 72,
+      "temperature": 98.5,
+      "weight": 170,
+      "height": 71
+    },
+    "diagnosis": "Gastroesophageal Reflux Disease (GERD)",
+    "treatment": {
+      "medications": [
+        {
+          "name": "Omeprazole",
+          "dosage": "20mg",
+          "frequency": "Once daily",
+          "instructions": "Take 30 minutes before breakfast"
+        },
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "Once daily",
+          "instructions": "Take in the evening"
+        }
+      ],
+      "lifestyle": [
+        "Avoid spicy and acidic foods",
+        "Eat smaller meals",
+        "Don't lie down for 3 hours after eating"
+      ]
+    },
+    "labResults": {
+      "hPylori": "Negative",
+      "esophagus": "Normal"
+    },
+    "followUp": {
+      "date": "2024-02-18T09:30:00Z",
+      "type": "Endoscopy",
+      "notes": "Schedule endoscopy to evaluate esophagus and stomach"
+    },
+    "createdAt": "2024-01-19T16:30:00Z"
+  }
+]

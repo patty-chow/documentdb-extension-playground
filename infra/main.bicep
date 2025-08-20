@@ -24,7 +24,7 @@ param aadAdminName string
   'ServicePrincipal'
 ])
 param aadAdminType string = 'User'
-param databaseName string = 'db'
+param databaseName string = 'healthcare'
 
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 
@@ -36,11 +36,11 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
 }
 
-module pg 'pg.bicep' = {
-  name: 'pg'
+module documentdb 'documentdb.bicep' = {
+  name: 'documentdb'
   scope: resourceGroup
   params: {
-    name: '${prefix}-postgresql'
+    name: '${prefix}-documentdb'
     location: location
     tags: tags
     authType: 'EntraOnly'
@@ -51,12 +51,12 @@ module pg 'pg.bicep' = {
     storage: {
       storageSizeGB: 32
     }
-    version: '15'
+    version: 'latest'
     allowAllIPsFirewall: true
   }
 }
 
-output POSTGRES_USERNAME string = aadAdminName
-output POSTGRES_DATABASE string = databaseName
-output POSTGRES_HOST string = pg.outputs.POSTGRES_DOMAIN_NAME
-output POSTGRES_SSL string = 'require'
+output DOCUMENTDB_USERNAME string = aadAdminName
+output DOCUMENTDB_DATABASE string = databaseName
+output DOCUMENTDB_HOST string = documentdb.outputs.DOCUMENTDB_DOMAIN_NAME
+output DOCUMENTDB_SSL string = 'require'

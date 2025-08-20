@@ -1,0 +1,285 @@
+// DocumentDB Extension Playground - Sample Queries
+// This file contains sample queries for the healthcare database
+// You can run these queries in the DocumentDB for VS Code extension
+
+// ========================================
+// BASIC CRUD OPERATIONS
+// ========================================
+
+// 1. Find all patients
+db.patients.find({})
+
+// 2. Find patients by last name
+db.patients.find({ lastName: "Smith" })
+
+// 3. Find patients with specific insurance provider
+db.patients.find({ "insurance.provider": "Blue Cross" })
+
+// 4. Find patients with allergies
+db.patients.find({ allergies: { $exists: true, $ne: [] } })
+
+// 5. Get only patient names and emails (projection)
+db.patients.find({}, { firstName: 1, lastName: 1, email: 1, _id: 0 })
+
+// ========================================
+// APPOINTMENTS QUERIES
+// ========================================
+
+// 6. Find all appointments
+db.appointments.find({})
+
+// 7. Find appointments for a specific patient
+db.appointments.find({ patientId: "P10001" })
+
+// 8. Find upcoming appointments (scheduled)
+db.appointments.find({ status: "Scheduled" })
+
+// 9. Find appointments by specialty
+db.appointments.find({ specialty: "Cardiology" })
+
+// 10. Find appointments with duration longer than 30 minutes
+db.appointments.find({ duration: { $gt: 30 } })
+
+// ========================================
+// MEDICAL RECORDS QUERIES
+// ========================================
+
+// 11. Find all medical records
+db.medical_records.find({})
+
+// 12. Find records for a specific patient
+db.medical_records.find({ patientId: "P10001" })
+
+// 13. Find records with high blood pressure
+db.medical_records.find({ "vitalSigns.bloodPressure": { $regex: /^1[4-9]/ } })
+
+// 14. Find records with specific diagnosis
+db.medical_records.find({ diagnosis: { $regex: /hypertension/i } })
+
+// 15. Find records with lab results above normal
+db.medical_records.find({ "labResults.cholesterol.total": { $gt: 200 } })
+
+// ========================================
+// BILLING QUERIES
+// ========================================
+
+// 16. Find all billing records
+db.billing.find({})
+
+// 17. Find paid bills
+db.billing.find({ status: "Paid" })
+
+// 18. Find pending bills
+db.billing.find({ status: "Pending" })
+
+// 19. Find bills with high charges
+db.billing.find({ "charges.total": { $gt: 500 } })
+
+// 20. Find bills by payment method
+db.billing.find({ paymentMethod: "Credit Card" })
+
+// ========================================
+// AGGREGATION QUERIES
+// ========================================
+
+// 21. Count patients by insurance provider
+db.patients.aggregate([
+  { $group: { _id: "$insurance.provider", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+// 22. Count appointments by status
+db.appointments.aggregate([
+  { $group: { _id: "$status", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+// 23. Calculate average appointment duration by specialty
+db.appointments.aggregate([
+  { $group: { _id: "$specialty", avgDuration: { $avg: "$duration" } } },
+  { $sort: { avgDuration: -1 } }
+])
+
+// 24. Calculate total billing by insurance provider
+db.billing.aggregate([
+  {
+    $lookup: {
+      from: "patients",
+      localField: "patientId",
+      foreignField: "patientId",
+      as: "patient"
+    }
+  },
+  { $unwind: "$patient" },
+  {
+    $group: {
+      _id: "$patient.insurance.provider",
+      totalBilled: { $sum: "$charges.total" },
+      totalPaid: { $sum: "$insurance.coveredAmount" },
+      patientResponsibility: { $sum: "$insurance.patientResponsibility" }
+    }
+  },
+  { $sort: { totalBilled: -1 } }
+])
+
+// 25. Patient demographics analysis
+db.patients.aggregate([
+  {
+    $addFields: {
+      age: {
+        $floor: {
+          $divide: [
+            { $subtract: [{ $toDate: "$$NOW" }, { $dateFromString: { dateString: "$dateOfBirth" } }] },
+            { $multiply: [365, 24, 60, 60, 1000] }
+          ]
+        }
+      }
+    }
+  },
+  {
+    $group: {
+      _id: {
+        ageGroup: {
+          $cond: {
+            if: { $lt: ["$age", 30] },
+            then: "18-29",
+            else: {
+              $cond: {
+                if: { $lt: ["$age", 50] },
+                then: "30-49",
+                else: "50+"
+              }
+            }
+          }
+        },
+        gender: "$gender"
+      },
+      count: { $sum: 1 },
+      avgAge: { $avg: "$age" }
+    }
+  },
+  { $sort: { "_id.ageGroup": 1, "_id.gender": 1 } }
+])
+
+// ========================================
+// COMPLEX JOIN QUERIES
+// ========================================
+
+// 26. Patient appointments with doctor information
+db.appointments.aggregate([
+  {
+    $lookup: {
+      from: "patients",
+      localField: "patientId",
+      foreignField: "patientId",
+      as: "patient"
+    }
+  },
+  { $unwind: "$patient" },
+  {
+    $project: {
+      appointmentId: 1,
+      appointmentDate: 1,
+      specialty: 1,
+      doctorName: 1,
+      patientName: { $concat: ["$patient.firstName", " ", "$patient.lastName"] },
+      patientEmail: "$patient.email"
+    }
+  },
+  { $sort: { appointmentDate: 1 } }
+])
+
+// 27. Patient medical history with billing
+db.medical_records.aggregate([
+  {
+    $lookup: {
+      from: "patients",
+      localField: "patientId",
+      foreignField: "patientId",
+      as: "patient"
+    }
+  },
+  {
+    $lookup: {
+      from: "billing",
+      localField: "patientId",
+      foreignField: "patientId",
+      as: "billing"
+    }
+  },
+  { $unwind: "$patient" },
+  {
+    $project: {
+      patientName: { $concat: ["$patient.firstName", " ", "$patient.lastName"] },
+      diagnosis: 1,
+      visitDate: 1,
+      totalBilled: { $sum: "$billing.charges.total" },
+      insuranceProvider: "$patient.insurance.provider"
+    }
+  },
+  { $sort: { visitDate: -1 } }
+])
+
+// ========================================
+// INDEX CREATION QUERIES
+// ========================================
+
+// 28. Create index on patientId for faster lookups
+db.patients.createIndex({ "patientId": 1 })
+
+// 29. Create compound index on lastName and firstName
+db.patients.createIndex({ "lastName": 1, "firstName": 1 })
+
+// 30. Create text index for searching patient names
+db.patients.createIndex({ "firstName": "text", "lastName": "text" })
+
+// 31. Create index on appointment date
+db.appointments.createIndex({ "appointmentDate": 1 })
+
+// 32. Create index on billing status
+db.billing.createIndex({ "status": 1 })
+
+// ========================================
+// UPDATE OPERATIONS
+// ========================================
+
+// 33. Update a patient's phone number
+db.patients.updateOne(
+  { patientId: "P10001" },
+  { $set: { phone: "+1-555-9999" } }
+)
+
+// 34. Update all patients with a specific insurance provider
+db.patients.updateMany(
+  { "insurance.provider": "Blue Cross" },
+  { $set: { "insurance.provider": "Blue Cross Blue Shield" } }
+)
+
+// 35. Add a new allergy to a patient
+db.patients.updateOne(
+  { patientId: "P10001" },
+  { $push: { allergies: "Sulfa drugs" } }
+)
+
+// ========================================
+// DELETE OPERATIONS
+// ========================================
+
+// 36. Delete a specific patient (be careful!)
+// db.patients.deleteOne({ patientId: "P10001" })
+
+// 37. Delete all patients with a specific last name (be careful!)
+// db.patients.deleteMany({ lastName: "Smith" })
+
+// ========================================
+// UTILITY QUERIES
+// ========================================
+
+// 38. Get database statistics
+db.stats()
+
+// 39. Get collection statistics
+db.patients.stats()
+
+// 40. List all indexes on patients collection
+db.patients.getIndexes()
