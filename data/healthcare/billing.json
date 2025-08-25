@@ -5,7 +5,7 @@
     "appointmentId": "APT001",
     "serviceDate": "2024-02-15T10:00:00Z",
     "serviceType": "Cardiology Consultation",
-    "provider": "Dr. Sarah Wilson",
+    "provider": "Dr. Emily Martinez",
     "charges": {
       "consultation": 150.00,
       "labWork": 85.00,
@@ -13,7 +13,7 @@
       "total": 260.00
     },
     "insurance": {
-      "provider": "Blue Cross",
+      "provider": "MediCare Plus",
       "policyNumber": "BC123456789",
       "coveredAmount": 208.00,
       "patientResponsibility": 52.00
@@ -29,7 +29,7 @@
     "appointmentId": "APT002",
     "serviceDate": "2024-02-16T14:30:00Z",
     "serviceType": "Psychiatry Consultation",
-    "provider": "Dr. James Chen",
+    "provider": "Dr. Michael Johnson",
     "charges": {
       "consultation": 200.00,
       "labWork": 45.00,
@@ -37,7 +37,7 @@
       "total": 280.00
     },
     "insurance": {
-      "provider": "Aetna",
+      "provider": "HealthShield",
       "policyNumber": "AE987654321",
       "coveredAmount": 224.00,
       "patientResponsibility": 56.00
@@ -53,14 +53,14 @@
     "appointmentId": "APT003",
     "serviceDate": "2024-02-14T08:00:00Z",
     "serviceType": "Annual Physical",
-    "provider": "Dr. Maria Rodriguez",
+    "provider": "Dr. Jennifer Williams",
     "charges": {
       "consultation": 120.00,
       "labWork": 150.00,
       "total": 270.00
     },
     "insurance": {
-      "provider": "Cigna",
+      "provider": "WellCare",
       "policyNumber": "CI456789123",
       "coveredAmount": 270.00,
       "patientResponsibility": 0.00
@@ -76,7 +76,7 @@
     "appointmentId": "APT004",
     "serviceDate": "2024-02-17T11:00:00Z",
     "serviceType": "Pulmonology Follow-up",
-    "provider": "Dr. Robert Thompson",
+    "provider": "Dr. Christopher Davis",
     "charges": {
       "consultation": 180.00,
       "labWork": 95.00,
@@ -84,7 +84,7 @@
       "total": 320.00
     },
     "insurance": {
-      "provider": "Blue Cross",
+      "provider": "MediCare Plus",
       "policyNumber": "BC987123456",
       "coveredAmount": 256.00,
       "patientResponsibility": 64.00
@@ -100,7 +100,7 @@
     "appointmentId": "APT005",
     "serviceDate": "2024-02-18T09:30:00Z",
     "serviceType": "Endoscopy Procedure",
-    "provider": "Dr. Lisa Park",
+    "provider": "Dr. Amanda Foster",
     "charges": {
       "consultation": 150.00,
       "procedure": 800.00,
@@ -110,7 +110,7 @@
       "total": 1500.00
     },
     "insurance": {
-      "provider": "UnitedHealth",
+      "provider": "PrimeHealth",
       "policyNumber": "UH321654987",
       "coveredAmount": 1200.00,
       "patientResponsibility": 300.00
@@ -126,7 +126,7 @@
     "appointmentId": "APT006",
     "serviceDate": "2024-02-20T15:00:00Z",
     "serviceType": "Dermatology Consultation",
-    "provider": "Dr. David Miller",
+    "provider": "Dr. Rachel Green",
     "charges": {
       "consultation": 140.00,
       "labWork": 75.00,
@@ -134,7 +134,7 @@
       "total": 245.00
     },
     "insurance": {
-      "provider": "Blue Cross",
+      "provider": "MediCare Plus",
       "policyNumber": "BC123456789",
       "coveredAmount": 196.00,
       "patientResponsibility": 49.00
@@ -150,14 +150,14 @@
     "appointmentId": "APT007",
     "serviceDate": "2024-02-23T13:00:00Z",
     "serviceType": "Psychiatry Follow-up",
-    "provider": "Dr. James Chen",
+    "provider": "Dr. Michael Johnson",
     "charges": {
       "consultation": 180.00,
       "medication": 40.00,
       "total": 220.00
     },
     "insurance": {
-      "provider": "Aetna",
+      "provider": "HealthShield",
       "policyNumber": "AE987654321",
       "coveredAmount": 176.00,
       "patientResponsibility": 44.00
@@ -173,14 +173,14 @@
     "appointmentId": "APT008",
     "serviceDate": "2024-02-25T10:30:00Z",
     "serviceType": "Orthopedic Consultation",
-    "provider": "Dr. Amanda Foster",
+    "provider": "Dr. Sarah Chen",
     "charges": {
       "consultation": 160.00,
       "xray": 120.00,
       "total": 280.00
     },
     "insurance": {
-      "provider": "Cigna",
+      "provider": "WellCare",
       "policyNumber": "CI456789123",
       "coveredAmount": 224.00,
       "patientResponsibility": 56.00

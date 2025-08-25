@@ -4,7 +4,7 @@
     "patientId": "P10001",
     "visitDate": "2024-01-15T10:30:00Z",
     "doctorId": "DOC001",
-    "doctorName": "Dr. Sarah Wilson",
+    "doctorName": "Dr. Emily Martinez",
     "visitType": "Initial Consultation",
     "chiefComplaint": "High blood pressure and chest pain",
     "vitalSigns": {
@@ -18,7 +18,7 @@
     "treatment": {
       "medications": [
         {
-          "name": "Lisinopril",
+          "name": "CardioMax",
           "dosage": "10mg",
           "frequency": "Once daily",
           "instructions": "Take in the morning"
@@ -51,7 +51,7 @@
     "patientId": "P10002",
     "visitDate": "2024-01-16T14:20:00Z",
     "doctorId": "DOC002",
-    "doctorName": "Dr. James Chen",
+    "doctorName": "Dr. Michael Johnson",
     "visitType": "Initial Consultation",
     "chiefComplaint": "Anxiety and difficulty sleeping",
     "vitalSigns": {
@@ -65,7 +65,7 @@
     "treatment": {
       "medications": [
         {
-          "name": "Zoloft",
+          "name": "MoodStabil",
           "dosage": "50mg",
           "frequency": "Once daily",
           "instructions": "Take in the morning with food"
@@ -92,7 +92,7 @@
     "patientId": "P10003",
     "visitDate": "2024-01-17T09:15:00Z",
     "doctorId": "DOC003",
-    "doctorName": "Dr. Maria Rodriguez",
+    "doctorName": "Dr. Jennifer Williams",
     "visitType": "Annual Physical",
     "chiefComplaint": "Annual checkup",
     "vitalSigns": {
@@ -106,13 +106,13 @@
     "treatment": {
       "medications": [
         {
-          "name": "Atorvastatin",
+          "name": "CholestoGuard",
           "dosage": "20mg",
           "frequency": "Once daily",
           "instructions": "Take in the evening"
         },
         {
-          "name": "Aspirin",
+          "name": "PainRelief",
           "dosage": "81mg",
           "frequency": "Once daily",
           "instructions": "Take in the morning"
@@ -146,7 +146,7 @@
     "patientId": "P10004",
     "visitDate": "2024-01-18T11:45:00Z",
     "doctorId": "DOC004",
-    "doctorName": "Dr. Robert Thompson",
+    "doctorName": "Dr. Christopher Davis",
     "visitType": "Initial Consultation",
     "chiefComplaint": "Shortness of breath and wheezing",
     "vitalSigns": {
@@ -160,13 +160,13 @@
     "treatment": {
       "medications": [
         {
-          "name": "Albuterol",
+          "name": "BreathEase",
           "dosage": "2 puffs",
           "frequency": "As needed",
           "instructions": "Use inhaler when experiencing symptoms"
         },
         {
-          "name": "Fluticasone",
+          "name": "NasoClear",
           "dosage": "110mcg",
           "frequency": "Twice daily",
           "instructions": "Use inhaler morning and evening"
@@ -197,7 +197,7 @@
     "patientId": "P10005",
     "visitDate": "2024-01-19T16:30:00Z",
     "doctorId": "DOC005",
-    "doctorName": "Dr. Lisa Park",
+    "doctorName": "Dr. Amanda Foster",
     "visitType": "Initial Consultation",
     "chiefComplaint": "Abdominal pain and acid reflux",
     "vitalSigns": {
@@ -211,13 +211,13 @@
     "treatment": {
       "medications": [
         {
-          "name": "Omeprazole",
+          "name": "AcidGuard",
           "dosage": "20mg",
           "frequency": "Once daily",
           "instructions": "Take 30 minutes before breakfast"
         },
         {
-          "name": "Cetirizine",
+          "name": "AllergyShield",
           "dosage": "10mg",
           "frequency": "Once daily",
           "instructions": "Take in the evening"

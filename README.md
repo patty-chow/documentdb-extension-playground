@@ -35,8 +35,7 @@ Learn how to use the DocumentDB for VS Code extension! This repository contains 
      ```
      mongodb://admin:password123@localhost:10260/?tls=true&tlsAllowInvalidCertificates=true&authMechanism=SCRAM-SHA-256
      ```
-   - Click "Test Connection" to verify connectivity
-   - Click "Save Connection"
+   - Click "Enter" when prompted for your username and password
 
 3. **Create a healthcare database:**
    - In the DocumentDB extension, right-click on your connection and select "Create Database..."
@@ -51,7 +50,7 @@ Learn how to use the DocumentDB for VS Code extension! This repository contains 
      - `billing` - Financial transactions
 
 5. **Import sample healthcare data:**
-   - Right-click on the `patients` collection and select "Import"
+   - Right-click on the `patients` collection and select "Import Documents into Collection..."
    - Choose `data/healthcare/patients.json` from this repository
    - Repeat for other collections using their respective JSON files
 
@@ -97,30 +96,40 @@ Try switching between these views to see how the same data is presented differen
    - Enter JSON directly:
      ```json
      {
-       "patientId": "P10001",
-       "firstName": "John",
-       "lastName": "Smith",
-       "dateOfBirth": "1985-03-15",
-       "email": "john.smith@email.com",
-       "phone": "+1-555-0123",
+       "patientId": "P10006",
+       "firstName": "Jessica",
+       "lastName": "Wilson",
+       "dateOfBirth": "1991-06-18",
+       "email": "jessica.wilson@email.com",
+       "phone": "+1-555-0133",
+       "gender": "Female",
        "address": {
-         "street": "123 Main St",
-         "city": "Springfield",
+         "street": "987 Cedar Ln",
+         "city": "Aurora",
          "state": "IL",
-         "zipCode": "62701"
+         "zipCode": "60505"
        },
        "insurance": {
-         "provider": "Blue Cross",
-         "policyNumber": "BC123456789"
+         "provider": "Humana",
+         "policyNumber": "HU789456123",
+         "groupNumber": "GRP005"
        },
-       "createdAt": new Date()
+       "emergencyContact": {
+         "name": "Thomas Wilson",
+         "relationship": "Husband",
+         "phone": "+1-555-0134"
+       },
+       "allergies": ["Dust mites", "Pollen"],
+       "medications": ["RespiraClear", "NasoRelief"],
+       "createdAt": "2024-01-20T13:45:00Z",
+       "lastUpdated": "2024-01-20T13:45:00Z"
      }
      ```
 
 ### Read documents
 
 1. **Basic queries:**
-   - Right-click on the `patients` collection and select "New Query"
+   - Right-click on the `patients` collection and select "DocumentDB Scrapbook" > "New DocumentDB Scrapbook"
    - Try these queries:
      ```javascript
      // Find all patients

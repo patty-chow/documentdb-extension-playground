@@ -13,7 +13,7 @@ db.patients.find({})
 db.patients.find({ lastName: "Smith" })
 
 // 3. Find patients with specific insurance provider
-db.patients.find({ "insurance.provider": "Blue Cross" })
+db.patients.find({ "insurance.provider": "MediCare Plus" })
 
 // 4. Find patients with allergies
 db.patients.find({ allergies: { $exists: true, $ne: [] } })
@@ -251,8 +251,8 @@ db.patients.updateOne(
 
 // 34. Update all patients with a specific insurance provider
 db.patients.updateMany(
-  { "insurance.provider": "Blue Cross" },
-  { $set: { "insurance.provider": "Blue Cross Blue Shield" } }
+  { "insurance.provider": "MediCare Plus" },
+{ $set: { "insurance.provider": "MediCare Plus Gold" } }
 )
 
 // 35. Add a new allergy to a patient

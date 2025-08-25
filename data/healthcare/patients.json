@@ -14,7 +14,7 @@
       "zipCode": "62701"
     },
     "insurance": {
-      "provider": "Blue Cross",
+      "provider": "MediCare Plus",
       "policyNumber": "BC123456789",
       "groupNumber": "GRP001"
     },
@@ -24,7 +24,7 @@
       "phone": "+1-555-0124"
     },
     "allergies": ["Penicillin", "Peanuts"],
-    "medications": ["Lisinopril", "Metformin"],
+    "medications": ["CardioMax", "GlucoControl"],
     "createdAt": "2024-01-15T10:30:00Z",
     "lastUpdated": "2024-01-15T10:30:00Z"
   },
@@ -43,7 +43,7 @@
       "zipCode": "60601"
     },
     "insurance": {
-      "provider": "Aetna",
+      "provider": "HealthShield",
       "policyNumber": "AE987654321",
       "groupNumber": "GRP002"
     },
@@ -53,7 +53,7 @@
       "phone": "+1-555-0126"
     },
     "allergies": ["Latex"],
-    "medications": ["Zoloft", "Vitamin D"],
+    "medications": ["MoodStabil", "VitaBoost"],
     "createdAt": "2024-01-16T14:20:00Z",
     "lastUpdated": "2024-01-16T14:20:00Z"
   },
@@ -72,7 +72,7 @@
       "zipCode": "61601"
     },
     "insurance": {
-      "provider": "Cigna",
+      "provider": "WellCare",
       "policyNumber": "CI456789123",
       "groupNumber": "GRP003"
     },
@@ -82,7 +82,7 @@
       "phone": "+1-555-0128"
     },
     "allergies": ["Sulfa drugs"],
-    "medications": ["Atorvastatin", "Aspirin"],
+    "medications": ["CholestoGuard", "PainRelief"],
     "createdAt": "2024-01-17T09:15:00Z",
     "lastUpdated": "2024-01-17T09:15:00Z"
   },
@@ -101,7 +101,7 @@
       "zipCode": "61101"
     },
     "insurance": {
-      "provider": "Blue Cross",
+      "provider": "MediCare Plus",
       "policyNumber": "BC987123456",
       "groupNumber": "GRP001"
     },
@@ -111,7 +111,7 @@
       "phone": "+1-555-0130"
     },
     "allergies": ["Shellfish", "Dairy"],
-    "medications": ["Albuterol", "Fluticasone"],
+    "medications": ["BreathEase", "NasoClear"],
     "createdAt": "2024-01-18T11:45:00Z",
     "lastUpdated": "2024-01-18T11:45:00Z"
   },
@@ -130,7 +130,7 @@
       "zipCode": "60540"
     },
     "insurance": {
-      "provider": "UnitedHealth",
+      "provider": "PrimeHealth",
       "policyNumber": "UH321654987",
       "groupNumber": "GRP004"
     },
@@ -140,7 +140,7 @@
       "phone": "+1-555-0132"
     },
     "allergies": ["Ibuprofen"],
-    "medications": ["Omeprazole", "Cetirizine"],
+    "medications": ["AcidGuard", "AllergyShield"],
     "createdAt": "2024-01-19T16:30:00Z",
     "lastUpdated": "2024-01-19T16:30:00Z"
   }
