@@ -177,10 +177,10 @@ db.products.aggregate([
 
 ## 🤝 Getting Help
 
-- **Extension Documentation**: Built-in help in VS Code
+- **DocumentDB Repository**: [Official Repo](https://github.com/documentdb/documentdb)
 - **Community Support**: [Discord channel](https://discord.gg/vH7bYu524D)
 - **GitHub Issues**: [Extension repository](https://github.com/microsoft/vscode-documentdb)
-- **DocumentDB Documentation**: [Official docs](https://github.com/microsoft/documentdb)
+- **DocumentDB Documentation**: [Official docs](https://github.com/documentdb/docs)
 
 ## 📝 Contributing
 
