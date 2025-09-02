@@ -1,6 +1,6 @@
 # Getting Started with DocumentDB Extension Playground
 
-Welcome to the DocumentDB Extension Playground! This repository is designed to help you learn and explore the DocumentDB for VS Code extension with realistic healthcare data.
+Welcome to the DocumentDB Extension Playground! This repository is designed to help you learn and explore the DocumentDB for VS Code extension with realistic e-commerce data from an Adventure Works bicycle shop.
 
 ## 🏗️ Repository Structure
 
@@ -14,12 +14,9 @@ documentdb-extension-playground/
 │   ├── documentdb.bicep       # DocumentDB-specific template
 │   └── main.parameters.json   # Deployment parameters
 ├── data/                       # Sample data
-│   └── healthcare/            # Healthcare database
-│       ├── patients.json      # Patient information
-│       ├── appointments.json  # Medical appointments
-│       ├── medical_records.json # Detailed health records
-│       ├── billing.json       # Financial transactions
-│       └── sample-queries.mongo # Sample queries to try
+│   ├── customer.json          # Customer information and sales orders
+│   ├── product.json           # Product catalog with categories and tags
+│   └── productMeta.json       # Product categories and metadata
 └── scripts/                   # Setup scripts
     ├── setup-documentdb.sh    # Linux/macOS setup
     └── setup-documentdb.ps1   # Windows setup
@@ -55,17 +52,18 @@ chmod +x scripts/setup-documentdb.sh
    ```
 
 ### 4. Create Database and Collections
-1. Right-click your connection → "Create Database..." → Name it `healthcare`
-2. Right-click the `healthcare` database → "Create Collection..." → Create:
-   - `patients`
-   - `appointments`
-   - `medical_records`
-   - `billing`
+1. Right-click your connection → "Create Database..." → Name it `adventureworks`
+2. Right-click the `adventureworks` database → "Create Collection..." → Create:
+   - `customers` - Customer information and sales orders
+   - `products` - Product catalog with categories and tags
+   - `categories` - Product categories and metadata
 
 ### 5. Import Sample Data
 1. Right-click each collection → "Import"
-2. Select the corresponding JSON file from `data/healthcare/`
-3. Import in this order: `patients.json`, `appointments.json`, `medical_records.json`, `billing.json`
+2. Select the corresponding JSON file from `data/`:
+   - `customers` collection: `customer.json`
+   - `products` collection: `product.json`
+   - `categories` collection: `productMeta.json`
 
 ## 📚 Learning Path
 
@@ -86,46 +84,55 @@ chmod +x scripts/setup-documentdb.sh
 
 ## 🎯 Sample Scenarios
 
-### Scenario 1: Patient Management
-- Find patients by insurance provider
-- Update patient contact information
-- Add new allergies to patient records
+### Scenario 1: Customer Management
+- Find customers by location or order history
+- Update customer contact information
+- Analyze customer purchasing patterns
 
-### Scenario 2: Appointment Scheduling
-- Find upcoming appointments
-- Schedule new appointments
-- Analyze appointment patterns by specialty
+### Scenario 2: Product Catalog
+- Find products by category or price range
+- Search products by tags or descriptions
+- Analyze product pricing and availability
 
-### Scenario 3: Medical Records Analysis
-- Find patients with specific diagnoses
-- Analyze vital signs trends
-- Generate patient demographics reports
+### Scenario 3: Sales Analysis
+- Find top-selling products
+- Analyze sales by customer segment
+- Generate revenue reports by category
 
-### Scenario 4: Billing and Finance
-- Track payment status
-- Calculate revenue by insurance provider
-- Analyze billing patterns
+### Scenario 4: Inventory Management
+- Track product categories and subcategories
+- Analyze product relationships and tags
+- Monitor product performance metrics
 
 ## 🔧 Useful Queries
 
-### Quick Patient Lookup
+### Quick Customer Lookup
 ```javascript
-db.patients.find({ lastName: "Smith" })
+db.customers.find({ "lastName": "Perez" })
 ```
 
-### Insurance Analysis
+### Product Category Analysis
 ```javascript
-db.patients.aggregate([
-  { $group: { _id: "$insurance.provider", count: { $sum: 1 } } },
+db.products.aggregate([
+  { $group: { _id: "$categoryName", count: { $sum: 1 } } },
   { $sort: { count: -1 } }
 ])
 ```
 
-### Appointment Summary
+### Sales Order Summary
 ```javascript
-db.appointments.aggregate([
-  { $group: { _id: "$specialty", count: { $sum: 1 } } },
-  { $sort: { count: -1 } }
+db.customers.aggregate([
+  { $match: { "type": "salesOrder" } },
+  { $group: { _id: "$customerId", orderCount: { $sum: 1 } } },
+  { $sort: { orderCount: -1 } }
+])
+```
+
+### Product Price Analysis
+```javascript
+db.products.aggregate([
+  { $group: { _id: "$categoryName", avgPrice: { $avg: "$price" } } },
+  { $sort: { avgPrice: -1 } }
 ])
 ```
 
@@ -142,7 +149,7 @@ db.appointments.aggregate([
 - Verify collection names match exactly
 
 ### Query Issues
-- Use the sample queries in `data/healthcare/sample-queries.mongo`
+- Use the sample queries provided above
 - Check MongoDB syntax documentation
 - Use the extension's query validation features
 

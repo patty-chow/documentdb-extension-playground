@@ -1,9 +1,9 @@
 # DocumentDB Extension Playground
 
-Learn how to use the DocumentDB for VS Code extension! This repository contains sample healthcare data and step-by-step instructions for setting up a local DocumentDB instance using Docker, connecting to it via the VS Code extension, and exploring all the features of the DocumentDB for VS Code extension.
+Learn how to use the DocumentDB for VS Code extension! This repository contains sample e-commerce data from Adventure Works bicycle shop and step-by-step instructions for setting up a local DocumentDB instance using Docker, connecting to it via the VS Code extension, and exploring all the features of the DocumentDB for VS Code extension.
 
 * [Prerequisites](#prerequisites)
-* [Explore a healthcare database with DocumentDB](#explore-a-healthcare-database-with-documentdb)
+* [Explore an e-commerce database with DocumentDB](#explore-an-e-commerce-database-with-documentdb)
 * [Use multiple data views](#use-multiple-data-views)
 * [Perform CRUD operations](#perform-crud-operations)
 * [Create indexes and run aggregation queries](#create-indexes-and-run-aggregation-queries)
@@ -15,7 +15,7 @@ Learn how to use the DocumentDB for VS Code extension! This repository contains 
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 * [Visual Studio Code](https://code.visualstudio.com/)
 
-## Explore a healthcare database with DocumentDB
+## Explore an e-commerce database with DocumentDB
 
 1. **Start a local DocumentDB instance using Docker:**
 
@@ -37,26 +37,27 @@ Learn how to use the DocumentDB for VS Code extension! This repository contains 
      ```
    - Click "Enter" when prompted for your username and password
 
-3. **Create a healthcare database:**
+3. **Create an Adventure Works database:**
    - In the DocumentDB extension, right-click on your connection and select "Create Database..."
-   - Enter `healthcare` as the database name and confirm
+   - Enter `adventureworks` as the database name and confirm
 
-4. **Create collections for healthcare data:**
-   - Right-click on the `healthcare` database and select "Create Collection..."
+4. **Create collections for e-commerce data:**
+   - Right-click on the `adventureworks` database and select "Create Collection..."
    - Create these collections:
-     - `patients` - Patient information
-     - `appointments` - Medical appointments
-     - `medical_records` - Detailed health records
-     - `billing` - Financial transactions
+     - `customers` - Customer information and sales orders
+     - `products` - Product catalog with categories and tags
+     - `categories` - Product categories and metadata
 
-5. **Import sample healthcare data:**
-   - Right-click on the `patients` collection and select "Import Documents into Collection..."
-   - Choose `data/healthcare/patients.json` from this repository
-   - Repeat for other collections using their respective JSON files
+5. **Import sample e-commerce data:**
+   - Right-click on the `customers` collection and select "Import Documents into Collection..."
+   - Choose `data/customer.json` from this repository
+   - Repeat for other collections using their respective JSON files:
+     - `products` collection: `data/product.json`
+     - `categories` collection: `data/productMeta.json`
 
 6. **Explore the database structure:**
-   - Click on the `healthcare` database to expand it
-   - Click on the `patients` collection to view documents
+   - Click on the `adventureworks` database to expand it
+   - Click on the `customers` collection to view documents
    - Notice the different data views available (Table, Tree, JSON)
 
 ## Use multiple data views
@@ -87,84 +88,81 @@ Try switching between these views to see how the same data is presented differen
 ### Create documents
 
 1. **Using the Table View:**
-   - Right-click on the `patients` collection and select "Create Document"
+   - Right-click on the `customers` collection and select "Create Document"
    - Fill in the fields in the table format
    - Click "Save" to create the document
 
 2. **Using the JSON View:**
-   - Right-click on the `patients` collection and select "Create Document"
+   - Right-click on the `customers` collection and select "Create Document"
    - Enter JSON directly:
      ```json
      {
-       "patientId": "P10006",
-       "firstName": "Jessica",
-       "lastName": "Wilson",
-       "dateOfBirth": "1991-06-18",
-       "email": "jessica.wilson@email.com",
-       "phone": "+1-555-0133",
-       "gender": "Female",
-       "address": {
-         "street": "987 Cedar Ln",
-         "city": "Aurora",
-         "state": "IL",
-         "zipCode": "60505"
+       "id": "NEW-CUSTOMER-001",
+       "type": "customer",
+       "customerId": "NEW-CUSTOMER-001",
+       "title": "Mr.",
+       "firstName": "John",
+       "lastName": "Doe",
+       "emailAddress": "john.doe@email.com",
+       "phoneNumber": "+1-555-0123",
+       "creationDate": "2024-01-20T13:45:00Z",
+       "addresses": [
+         {
+           "addressLine1": "123 Main St",
+           "addressLine2": "",
+           "city": "Seattle",
+           "state": "WA",
+           "country": "US",
+           "zipCode": "98101"
+         }
+       ],
+       "password": {
+         "hash": "sample-hash",
+         "salt": "sample-salt"
        },
-       "insurance": {
-         "provider": "Humana",
-         "policyNumber": "HU789456123",
-         "groupNumber": "GRP005"
-       },
-       "emergencyContact": {
-         "name": "Thomas Wilson",
-         "relationship": "Husband",
-         "phone": "+1-555-0134"
-       },
-       "allergies": ["Dust mites", "Pollen"],
-       "medications": ["RespiraClear", "NasoRelief"],
-       "createdAt": "2024-01-20T13:45:00Z",
-       "lastUpdated": "2024-01-20T13:45:00Z"
+       "salesOrderCount": 0
      }
      ```
 
 ### Read documents
 
 1. **Basic queries:**
-   - Right-click on the `patients` collection and select "DocumentDB Scrapbook" > "New DocumentDB Scrapbook"
+   - Right-click on the `customers` collection and select "DocumentDB Scrapbook" > "New DocumentDB Scrapbook"
    - Try these queries:
      ```javascript
-     // Find all patients
-     db.patients.find({})
+     // Find all customers
+     db.customers.find({})
      
-     // Find patients by last name
-     db.patients.find({ lastName: "Smith" })
+     // Find customers by last name
+     db.customers.find({ lastName: "Perez" })
      
-     // Find patients with specific insurance
-     db.patients.find({ "insurance.provider": "Blue Cross" })
+     // Find customers with specific order count
+     db.customers.find({ "salesOrderCount": { $gt: 25 } })
      ```
 
 2. **Query with projections:**
    ```javascript
-   // Get only patient names and emails
-   db.patients.find({}, { firstName: 1, lastName: 1, email: 1, _id: 0 })
+   // Get only customer names and emails
+   db.customers.find({}, { firstName: 1, lastName: 1, emailAddress: 1, _id: 0 })
    ```
 
 ### Update documents
 
 1. **Update a single document:**
    ```javascript
-   // Update a patient's phone number
-   db.patients.updateOne(
-     { patientId: "P10001" },
-     { $set: { phone: "+1-555-9999" } }
+   // Update a customer's phone number
+   db.customers.updateOne(
+     { customerId: "44A6D5F6-AF44-4B34-8AB5-21C5DC50926E" },
+     { $set: { phoneNumber: "+1-555-9999" } }
    )
    ```
 
 2. **Update multiple documents:**
    ```javascript
-   // Update all patients with a specific insurance provider
-   db.patients.updateMany(
-     { "insurance.provider": "Blue Cross" },
-     { $set: { "insurance.provider": "Blue Cross Blue Shield" } }
+   // Update all customers with high order counts
+   db.customers.updateMany(
+     { "salesOrderCount": { $gt: 25 } },
+     { $set: { "customerType": "VIP" } }
    )
    ```
 
@@ -172,14 +170,14 @@ Try switching between these views to see how the same data is presented differen
 
 1. **Delete a single document:**
    ```javascript
-   // Delete a specific patient
-   db.patients.deleteOne({ patientId: "P10001" })
+   // Delete a specific customer
+   db.customers.deleteOne({ customerId: "44A6D5F6-AF44-4B34-8AB5-21C5DC50926E" })
    ```
 
 2. **Delete multiple documents:**
    ```javascript
-   // Delete all patients with a specific last name
-   db.patients.deleteMany({ lastName: "Smith" })
+   // Delete all customers with no orders
+   db.customers.deleteMany({ salesOrderCount: 0 })
    ```
 
 ## Create indexes and run aggregation queries
@@ -188,92 +186,77 @@ Try switching between these views to see how the same data is presented differen
 
 1. **Single field index:**
    ```javascript
-   // Create an index on patientId for faster lookups
-   db.patients.createIndex({ "patientId": 1 })
+   // Create an index on customerId for faster lookups
+   db.customers.createIndex({ "customerId": 1 })
    ```
 
 2. **Compound index:**
    ```javascript
    // Create an index on lastName and firstName
-   db.patients.createIndex({ "lastName": 1, "firstName": 1 })
+   db.customers.createIndex({ "lastName": 1, "firstName": 1 })
    ```
 
 3. **Text index for search:**
    ```javascript
-   // Create a text index for searching patient names
-   db.patients.createIndex({ "firstName": "text", "lastName": "text" })
+   // Create a text index for searching product names
+   db.products.createIndex({ "name": "text", "description": "text" })
    ```
 
 ### Aggregation queries
 
-1. **Basic aggregation - count patients by insurance provider:**
+1. **Basic aggregation - count products by category:**
    ```javascript
-   db.patients.aggregate([
-     { $group: { _id: "$insurance.provider", count: { $sum: 1 } } },
+   db.products.aggregate([
+     { $group: { _id: "$categoryName", count: { $sum: 1 } } },
      { $sort: { count: -1 } }
    ])
    ```
 
-2. **Complex aggregation - patient demographics:**
+2. **Complex aggregation - product pricing analysis:**
    ```javascript
-   db.patients.aggregate([
-     {
-       $addFields: {
-         age: {
-           $floor: {
-             $divide: [
-               { $subtract: [new Date(), { $dateFromString: { dateString: "$dateOfBirth" } }] },
-               365 * 24 * 60 * 60 * 1000
-             ]
-           }
-         }
-       }
-     },
+   db.products.aggregate([
      {
        $group: {
-         _id: {
-           ageGroup: {
-             $cond: {
-               if: { $lt: ["$age", 30] },
-               then: "18-29",
-               else: {
-                 $cond: {
-                   if: { $lt: ["$age", 50] },
-                   then: "30-49",
-                   else: "50+"
-                 }
-               }
-             }
-           }
-         },
+         _id: "$categoryName",
          count: { $sum: 1 },
-         avgAge: { $avg: "$age" }
+         avgPrice: { $avg: "$price" },
+         minPrice: { $min: "$price" },
+         maxPrice: { $max: "$price" }
        }
      },
-     { $sort: { "_id.ageGroup": 1 } }
+     { $sort: { avgPrice: -1 } }
    ])
    ```
 
-3. **Join-like aggregation with appointments:**
+3. **Join-like aggregation with customers and orders:**
    ```javascript
-   db.appointments.aggregate([
+   db.customers.aggregate([
      {
-       $lookup: {
-         from: "patients",
-         localField: "patientId",
-         foreignField: "patientId",
-         as: "patient"
-       }
+       $match: { "type": "salesOrder" }
      },
-     { $unwind: "$patient" },
      {
        $group: {
-         _id: "$patient.lastName",
-         appointmentCount: { $sum: 1 },
-         totalDuration: { $sum: "$duration" }
+         _id: "$customerId",
+         orderCount: { $sum: 1 },
+         totalItems: { $sum: { $size: "$details" } }
        }
      },
-     { $sort: { appointmentCount: -1 } }
+     { $sort: { orderCount: -1 } }
+   ])
+   ```
+
+4. **Product tag analysis:**
+   ```javascript
+   db.products.aggregate([
+     { $unwind: "$tags" },
+     {
+       $group: {
+         _id: "$tags.name",
+         productCount: { $sum: 1 },
+         avgPrice: { $avg: "$price" }
+       }
+     },
+     { $sort: { productCount: -1 } }
    ])
    ```
 
@@ -337,4 +320,4 @@ Try switching between these views to see how the same data is presented differen
 
 ## Licensing
 
-This repository is provided under the MIT License. The sample healthcare data is fictional and created for educational purposes only.
+This repository is provided under the MIT License. The sample e-commerce data is fictional and created for educational purposes only.
